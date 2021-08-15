@@ -1,4 +1,4 @@
-package com.norm.memento.pratice;
+package com.norm.exercises.memento;
 
 import java.util.ArrayList;
 import java.util.List;

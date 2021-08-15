@@ -1,4 +1,4 @@
-package com.norm.memento.pratice;
+package com.norm.exercises.memento;
 
 public class Document {
     private String content;
