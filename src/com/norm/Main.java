@@ -1,37 +1,21 @@
 package com.norm;
 
-import com.norm.command.*;
-import com.norm.command.editor.BoldCommand;
-import com.norm.command.editor.History;
-import com.norm.command.editor.HtmlDocument;
-import com.norm.command.editor.UndoCommand;
-import com.norm.command.fx.Button;
-import com.norm.template.TransferMoneyTask;
+import com.norm.observer.Chart;
+import com.norm.observer.DataSource;
+import com.norm.observer.SpreadSheet;
 
 public class Main {
     public static void main(String[] args) {
-        var service = new CustomerService();
-        var command = new AddCustomerCommand(service);
-        var button = new Button(command);
-        button.click();
+        var dataSource = new DataSource();
+        var spreadSheet1 = new SpreadSheet(dataSource);
+        var spreadSheet2 = new SpreadSheet(dataSource);
+        var chart = new Chart(dataSource);
 
-        // composite
-        var composite = new CompositeCommand();
-        composite.addCommand(new ResizeCommand());
-        composite.addCommand(new BlackAndWhiteCommand());
-        composite.execute();
-        composite.execute();
+        dataSource.addObserver(spreadSheet1);
+        dataSource.addObserver(spreadSheet2);
+        dataSource.addObserver(chart);
 
-        // Undoable command
-        var history = new History();
-        var document = new HtmlDocument();
-        document.setContent("Hello World");
-        var boldCommand = new BoldCommand(document, history);
-        boldCommand.execute();
-        System.out.println(document.getContent());
-
-        var undoCommand = new UndoCommand(history);
-        undoCommand.execute();
-        System.out.println(document.getContent());
+        dataSource.setValue(1);
+        dataSource.setValue(10);
     }
 }
